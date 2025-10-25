@@ -1,0 +1,20 @@
+version: '3.8'
+
+volumes:
+  postgres_data:
+
+services:
+  postgres:
+    image: postgres:15.2-alpine
+    container_name: fastapi_postgres
+    ports:
+      - '5429:5432'
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: user
+      POSTGRES_DB: test_db
+    volumes:
+      # - ./versioning_function.sql:/versioning_function.sql
+      - type: volume
+        source: postgres_data
+        target: /var/lib/postgresql/data
