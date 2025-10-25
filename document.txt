@@ -1,0 +1,119 @@
+FAST API:
+
+1. Isolate the Package using Environment:
+  -command - python -m venv myenv
+  -Activate Environment - myenv/Scripts/activate.bat
+  -Deactivate Environment - deactivate
+2. Fast API dependency - pip install fastapi uvicorn(webserver)
+3. Running the app - uvicorn main:app --reload
+4. pydantic - Data Validation - built in comes from uvicorn pakcage itself.
+5. DB - SQLAlchemy - python sql toolkit and object relational mapper.
+6. DB - pip install sqlalchemy psycopg2
+
+
+
+Project Structure:
+
+
+| Layer             | Purpose                                                                                                       |
+| ----------------- | ------------------------------------------------------------------------------------------------------------- |
+| **core/**         | Environment config, DB setup (SQLAlchemy / async engine), logging, and security utilities.                    |
+| **api/**          | Request/response layer (FastAPI routers, endpoints, and dependency injections).                               |
+| **models/**       | SQLAlchemy ORM models or Pydantic Base models for database schema.                                            |
+| **schemas/**      | Pydantic models for input/output validation (used in API endpoints).                                          |
+| **repositories/** | Data access logic, separated for testability (DAO pattern).                                                   |
+| **services/**     | Business logic that uses repositories or legacy services.                                                     |
+| **legacy/**       | Old-style modules (e.g., raw SQL, non-async functions, or procedural scripts). This allows gradual migration. |
+| **utils/**        | Shared helpers like exceptions, pagination, or formatters.                                                    |
+| **tests/**        | Pytest-based unit and integration tests.                                                                      |
+| **alembic/**      | Database migrations for SQLAlchemy.                                                                           |
+
+
+fastapi_legacy_app/
+│
+├── app/
+│   ├── __init__.py
+│   ├── main.py
+│   ├── core/
+│   │   ├── config.py
+│   │   ├── database.py
+│   │   ├── logging_config.py
+│   │   └── security.py
+│   │
+│   ├── api/
+│   │   ├── __init__.py
+│   │   ├── deps.py
+│   │   ├── routers/
+│   │   │   ├── __init__.py
+│   │   │   ├── users_router.py
+│   │   │   ├── items_router.py
+│   │   │   └── legacy_router.py
+│   │   │
+│   │   └── v1/
+│   │       ├── __init__.py
+│   │       └── endpoints/
+│   │           ├── __init__.py
+│   │           ├── user_endpoints.py
+│   │           └── item_endpoints.py
+│   │
+│   ├── models/
+│   │   ├── __init__.py
+│   │   ├── user.py
+│   │   ├── item.py
+│   │   └── base_class.py
+│   │
+│   ├── schemas/
+│   │   ├── __init__.py
+│   │   ├── user_schema.py
+│   │   ├── item_schema.py
+│   │   └── legacy_schema.py
+│   │
+│   ├── services/
+│   │   ├── __init__.py
+│   │   ├── user_service.py
+│   │   ├── item_service.py
+│   │   └── legacy_service.py
+│   │
+│   ├── repositories/
+│   │   ├── __init__.py
+│   │   ├── base_repository.py
+│   │   ├── user_repository.py
+│   │   └── item_repository.py
+│   │
+│   ├── legacy/
+│   │   ├── __init__.py
+│   │   ├── dao/
+│   │   │   ├── user_dao.py
+│   │   │   └── item_dao.py
+│   │   ├── utils/
+│   │   │   ├── converter.py
+│   │   │   ├── validator.py
+│   │   │   └── helpers.py
+│   │   └── services/
+│   │       ├── legacy_user_service.py
+│   │       └── legacy_item_service.py
+│   │
+│   └── utils/
+│       ├── __init__.py
+│       ├── common.py
+│       ├── exceptions.py
+│       ├── response.py
+│       └── pagination.py
+│
+├── tests/
+│   ├── __init__.py
+│   ├── test_users.py
+│   ├── test_items.py
+│   └── test_legacy.py
+│
+├── requirements.txt
+├── alembic/
+│   ├── env.py
+│   ├── script.py.mako
+│   └── versions/
+│
+├── alembic.ini
+├── .env
+├── .gitignore
+└── README.md
+
