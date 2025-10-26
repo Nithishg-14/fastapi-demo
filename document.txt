@@ -9,6 +9,9 @@ FAST API:
 4. pydantic - Data Validation - built in comes from uvicorn pakcage itself.
 5. DB - SQLAlchemy - python sql toolkit and object relational mapper.
 6. DB - pip install sqlalchemy psycopg2
+7. model_dump - give us a dictionary. ** is unpacking option
+8. FastAPI itself having the dependency injection concept.
+
 
 
 
