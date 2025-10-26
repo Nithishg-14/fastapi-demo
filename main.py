@@ -3,8 +3,12 @@ from models import Product
 from database import session,engine
 import database_models
 from sqlalchemy.orm import Session
+import os
+from dotenv import load_dotenv
 
-app = FastAPI()
+load_dotenv()
+
+app = FastAPI(title=os.getenv("APP_NAME"), version=os.getenv("VERSION"), debug=os.getenv("DEBUG")=="True")
 database_models.Base.metadata.create_all(bind=engine)
 
 @app.get("/")
